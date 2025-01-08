@@ -186,6 +186,12 @@ body {
       padding: 10px 30px;
     }
   }
+
+  .error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
   
   @media (max-width: 480px) {
     .radio-group,

@@ -503,6 +503,8 @@ function validateID(id) {
 const familyHeadID = formData.get('family-head-id');
 const wifeID = formData.get('family-wife-id');
 
+
+
 if (!validateID(familyHeadID)) {
     isValid = false;
     const familyHeadInput = document.querySelector('[name="family-head-id"]');
@@ -638,6 +640,7 @@ if (talentsExists && talentsDetails.length === 0) {
               passport: {
                   type: formData.get('passport-type'),
                   number: formData.get('passport-number'),
+                  file_url : formData.get('husband-passport-file')
               },
           },
           wife: {
@@ -646,6 +649,7 @@ if (talentsExists && talentsDetails.length === 0) {
               passport: {
                   type: formData.get('wife-passport-type'),
                   number: formData.get('wife-passport-number'),
+                  file_url : formData.get('wife-passport-file')
               },
           },
           entry_date: formData.get('entry-date'),
@@ -869,3 +873,60 @@ inputsS.forEach((el)=>{
 el.removeAttribute('required');
 })
 
+
+
+// Add these constants at the top of script.js
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
+
+function validatePassportFile(fileInput, fieldName) {
+    const file = fileInput.files[0];
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message';
+    
+    // Remove any existing error message
+    const existingError = fileInput.parentElement.querySelector('.error-message');
+    if (existingError) existingError.remove();
+    
+    if (!file) {
+        errorDiv.textContent = `الرجاء اختيار ملف ${fieldName}`;
+        fileInput.parentElement.appendChild(errorDiv);
+        return false;
+    }
+    
+    if (!ALLOWED_TYPES.includes(file.type)) {
+        errorDiv.textContent = 'يجب أن يكون الملف صورة (JPG, PNG) أو PDF';
+        fileInput.parentElement.appendChild(errorDiv);
+        return false;
+    }
+    
+    if (file.size > MAX_FILE_SIZE) {
+        errorDiv.textContent = 'حجم الملف يجب أن يكون أقل من 5 ميجابايت';
+        fileInput.parentElement.appendChild(errorDiv);
+        return false;
+    }
+    
+    return true;
+}
+
+// Add event listeners
+document.getElementById('husband-passport-file').addEventListener('change', function() {
+    validatePassportFile(this, 'جواز سفر رب الأسرة');
+});
+
+document.getElementById('wife-passport-file').addEventListener('change', function() {
+    validatePassportFile(this, 'جواز سفر الزوجة');
+});
+
+// Add to form submit handler
+document.getElementById('familyForm').addEventListener('submit', function(e) {
+    const husbandFile = document.getElementById('husband-passport-file');
+    const wifeFile = document.getElementById('wife-passport-file');
+    
+    const isHusbandValid = validatePassportFile(husbandFile, 'جواز سفر رب الأسرة');
+    const isWifeValid = validatePassportFile(wifeFile, 'جواز سفر الزوجة');
+    
+    if (!isHusbandValid || !isWifeValid) {
+        e.preventDefault();
+    }
+});
