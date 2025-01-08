@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نموذج بيانات الأسرة</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  
+</head>
+<body>
+  <div class="form-container">
+     <!-- Logo -->
+     <div style="text-align: center; margin-bottom: 20px;">
+        <img width="50%" src="https://img.freepik.com/free-vector/colorful-bird-illustration-gradient_343694-1741.jpg?t=st=1731850149~exp=1731853749~hmac=570dd7af59a311d62f38751a48962c6bedb59b095cda89060b1b7663c2a5aa4e&w=1480" alt="Logo" style="max-width: 100%; height: auto;">
+    </div>
+
+    <h1>نموذج بيانات الأسرة</h1>
+    <form id="familyForm">
+        <!-- Family Details -->
+        <div class="form-group">
+            <label for="family-head-name">اسم رب الأسرة رباعي <span>*</span></label>
+            <input type="text" id="family-head-name" name="family-head-name" placeholder="إجابتك" required>
+        </div>
+
+        <div class="form-group">
+            <label for="family-head-id">رقم هوية رب الأسرة<span>*</span></label>
+            <input type="text" id="family-head-id" name="family-head-id" placeholder="9 ارقام" required>
+        </div>
+
+        <div class="form-group">
+            <label for="passport-type">جواز السفر <span>*</span></label>
+            <select id="passport-type" name="passport-type" onchange="handlePassportType(this.value)" required>
+                <option value="">اختر نوع جواز السفر</option>
+                <option value="palestinian">فلسطيني</option>
+                <option value="non-palestinian">غير فلسطيني</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="passport-number">رقم جواز السفر <span>*</span></label>
+            <input type="text" id="passport-number" name="passport-number" placeholder="أدخل رقم جواز السفر" required>
+        </div>
+
+        <!-- Wife Details -->
+        <div class="form-group">
+            <label for="family-wife-name">اسم الزوجة رباعي <span>*</span></label>
+            <input type="text" id="family-wife-name" name="family-wife-name" placeholder="إجابتك" required>
+        </div>
+
+        <div class="form-group">
+            <label for="family-wife-id">رقم هوية الزوجة<span>*</span></label>
+            <input type="text" id="family-wife-id" name="family-wife-id" placeholder="إجابتك" required>
+        </div>
+
+        <div class="form-group">
+            <label for="wife-passport-type">جواز السفر للزوجة <span>*</span></label>
+            <select id="wife-passport-type" name="wife-passport-type" onchange="handleWifePassportType(this.value)" required>
+                <option value="">اختر نوع جواز السفر</option>
+                <option value="palestinian">فلسطيني</option>
+                <option value="non-palestinian">غير فلسطيني</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="wife-passport-number">رقم جواز السفر للزوجة <span>*</span></label>
+            <input type="text" id="wife-passport-number" name="wife-passport-number" placeholder="أدخل رقم جواز السفر" required>
+        </div>
+
+        <div class="form-group">
+            <label for="entry-date">تاريخ دخول مصر بناءً على ختم جواز السفر <span>*</span></label>
+            <input type="date" id="entry-date" name="entry-date" placeholder="dd/mm/yy" required>
+        </div>
+
+        <!-- Address -->
+        <div class="form-group">
+            <label for="governorate">العنوان في مصر (المحافظة) <span>*</span></label>
+            <select id="governorate" name="governorate" onchange="handleGovernorateChange(this.value)" required>
+                <option value="">اختر المحافظة</option>
+                <option value="القاهرة">القاهرة</option>
+                <option value="6 أكتوبر">6 أكتوبر</option>
+                <option value="الجيزة">الجيزة</option>
+                <option value="الإسكندرية">الإسكندرية</option>
+                <option value="الإسماعيلية">الإسماعيلية</option>
+                <option value="شمال سيناء">شمال سيناء</option>
+                <option value="بور سعيد">بور سعيد</option>
+                <option value="العريش">العريش</option>
+                <option value="أخرى">أخرى</option>
+            </select>
+        </div>
+        
+        <!-- Hidden input for "أخرى" -->
+        <div class="form-group" id="other-governorate-container" style="display: none; margin-top: 10px;">
+            <input
+                type="text"
+                id="other-governorate"
+                name="other-governorate"
+                placeholder="أدخل اسم المحافظة"
+                style="width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;"
+            />
+        </div>
+        
+          
+     
+          
+          
+
+        <div class="form-group">
+            <label for="district">العنوان في مصر (الحي) <span>*</span></label>
+            <input type="text" id="district" name="district" placeholder="مثال: خلف جنينة مول شارع ..." required>
+        </div>
+<!-- Additional Family Inputs -->
+<div class="form-group">
+    <label>معيل الأسرة <span>*</span></label>
+    <div id="provider-options" style="display: flex; gap: 20px; align-items: center;">
+        <label style="display: flex; align-items: center; gap: 5px;">
+            <input type="radio" name="provider-type" value="husband" required> زوج
+        </label>
+        <label style="display: flex; align-items: center; gap: 5px;">
+            <input type="radio" name="provider-type" value="wife"> زوجة
+        </label>
+        <label style="display: flex; align-items: center; gap: 5px;">
+            <input type="radio" name="provider-type" value="other"> أخرى
+        </label>
+    </div>
+</div>
+
+<div id="other-provider-info" style="display: none;">
+    <div class="form-group">
+        <label for="provider-name">اسم معيل الأسرة رباعي <span>*</span></label>
+        <input type="text" id="provider-name" name="provider-name" placeholder="إجابتك">
+    </div>
+    <div class="form-group">
+        <label for="provider-id">رقم الهوية <span>*</span></label>
+        <input
+         type="text" id="provider-id"   
+         name="provider-id" 
+         placeholder=" ٩ خانات رقم الهوية"
+         
+        >
+    </div>
+</div>
+
+
+
+
+       
+
+        <div class="form-group">
+            <label for="phone">رقم مصري للتواصل <span>*</span></label>
+            <input type="text" id="phone" name="phone" placeholder="إجابتك" required>
+        </div>
+
+        <div class="form-group">
+            <label for="whatsapp">رقم واتساب مع مقدمة الدولة <span>*</span></label>
+            <input type="text" id="whatsapp" name="whatsapp" placeholder="00972501234567" required>
+        </div>
+
+        <div class="form-group">
+            <label for="total-family">عدد أفراد الأسرة الكلي المقيمين في مصر <span>*</span></label>
+            <input type="text" id="total-family" name="total-family" placeholder="إجابتك" required>
+        </div>
+<!--  -->
+
+
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Family Conditions</title>
+
+</head>
+<body>
+
+  <!-- Family Conditions -->
+  <div class="form-group">
+    <label> هل يوجد شهداء في العائلة؟ </label>
+    <select name="martyrs" id="martyrs" onchange="handleChange(event, 'martyrs-details')">
+      <option value="">اختر</option>
+      <option value="yes">نعم</option>
+      <option value="no">لا</option>
+    </select>
+    <div id="martyrs-details" class="hidden"></div>
+  </div>
+
+  <div class="form-group">
+    <label>هل يوجد جرحى في العائلة؟</label>
+    <select name="injured" id="injured" onchange="handleChange(event, 'injured-details')">
+      <option value="">اختر</option>
+      <option value="yes">نعم</option>
+      <option value="no">لا</option>
+    </select>
+    <div id="injured-details" class="hidden"></div>
+  </div>
+
+  <div class="form-group">
+    <label>هل يوجد أصحاب أمراض مزمنة؟</label>
+    <select name="chronic-diseases" id="chronic-diseases" onchange="handleChange(event, 'chronic-diseases-details')">
+      <option value="">اختر</option>
+      <option value="yes">نعم</option>
+      <option value="no">لا</option>
+    </select>
+    <div id="chronic-diseases-details" class="hidden"></div>
+  </div>
+
+  <div class="form-group">
+    <label>هل أحد أفراد الأسرة يتطلب عمل عملية جراحية عاجلة؟</label>
+    <select name="urgent-surgery" id="urgent-surgery" onchange="handleChange(event, 'urgent-surgery-details')">
+      <option value="">اختر</option>
+      <option value="yes">نعم</option>
+      <option value="no">لا</option>
+    </select>
+    <div id="urgent-surgery-details" class="hidden"></div>
+  </div>
+
+ 
+
+</body>
+</html>
+
+
+
+
+
+<!-- Children Count -->
+<div class="form-group">
+    <label for="daughter-above-12-select">عدد الابناء</label>
+    <select id="daughter-above-12-select" name="daughter-above-12" required>
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+    </select>
+</div>
+
+<!-- Container for dynamically generated inputs -->
+<div id="daughter-above-12-inputs" class="form-group"></div>
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+      <!-- Talents Section -->
+      <div class="form-group">
+        <label>هل يوجد مواهب عند الأطفال؟</label>
+        <div class="radio-group">
+          <label><input type="radio" name="children-talents" value="yes" onclick="handleTalents(true)"> نعم</label>
+          <label><input type="radio" name="children-talents" value="no" onclick="handleTalents(false)"> لا</label>
+        </div>
+      </div>
+
+      <div class="hidden" id="talentOptions">
+        <div class="form-group">
+          <label>المواهب:</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" name="talents" value="poetry"> شعر</label>
+            <label><input type="checkbox" name="talents" value="football"> كرة قدم</label>
+            <label><input type="checkbox" name="talents" value="singing"> نشيد</label>
+            <input type="text" name="talents" placeholder="أخرى">
+          </div>
+        </div>
+      </div>
+
+
+
+  
+
+
+<!-- Family Conditions -->
+<div class="form-group">
+    <label>هل يوجد أطفال أقل من سنتين؟</label>
+    <div class="radio-group" style="margin-bottom: 20px; display: flex; gap: 15px;">
+        <label style="display: flex; align-items: center;">
+            <input type="radio" name="underTwo" value="yes" onclick="handleUnderTwo(true)" style="margin-left: 5px;"> نعم
+        </label>
+        <label style="display: flex; align-items: center;">
+            <input type="radio" name="underTwo" value="no" onclick="handleUnderTwo(false)" style="margin-left: 5px;"> لا
+        </label>
+    </div>
+</div>
+
+<div id="babyNeeds" style="display: none; margin-top: 20px;">
+    <div class="form-group" style="margin-bottom: 15px;">
+        <label for="diapers" style="font-weight: bold;">هل يلزم حفاضات؟</label>
+        <div style="margin-top: 10px;">
+            <input type="checkbox" id="diapers" name="diapers" value="yes" style="width: 20px; height: 20px; accent-color: green;">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="milk" style="font-weight: bold;">هل يلزم حليب أطفال؟</label>
+        <div style="margin-top: 10px;">
+            <input type="checkbox" id="milk" name="milk" value="yes" style="width: 20px; height: 20px; accent-color: green;">
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+        <div class="form-footer">
+            <button type="submit">إرسال</button>
+        </div>
+    </form>
+  </div>
+
+ 
+
+
+
+
+
+<script src="./script.js"></script>
+
+
+
+
+</body>
+</html>
+
